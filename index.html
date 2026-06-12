@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SchoolsInfo – Find the Best Schools in Karachi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"/>
+  <style>
+    :root {
+      --navy:      #0b1f3a;
+      --navy-mid:  #132d52;
+      --blue:      #1a4b8c;
+      --sky:       #2e86de;
+      --gold:      #f5a623;
+      --gold-deep: #d4891a;
+      --cream:     #faf8f4;
+      --parchment: #f0ebe0;
+      --slate:     #5d7185;
+      --text:      #1c2a3a;
+      --white:     #ffffff;
+      --radius:    16px;
+      --shadow-sm: 0 2px 12px rgba(11,31,58,.08);
+      --shadow:    0 8px 36px rgba(11,31,58,.13);
+      --shadow-lg: 0 20px 64px rgba(11,31,58,.18);
+      --ease:      cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ═══════════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    h1,h2,h3,h4,h5 { font-family: 'Cormorant Garamond', serif; line-height: 1.2; }
+    a { text-decoration: none; }
+    img { max-width: 100%; }
+
+    /* ═══════════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--parchment); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 99px; }
+
+    /* ═══════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════ */
+    #mainNav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0;
+      background: transparent;
+      transition: background .35s var(--ease), box-shadow .35s var(--ease);
+    }
+    #mainNav.scrolled {
+      background: rgba(11,31,58,.97);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 2px 24px rgba(0,0,0,.25);
+    }
+    .nav-inner {
+      display: flex; align-items: center;
+      padding: 0 2rem;
+      height: 72px;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem; font-weight: 700;
+      color: var(--white) !important;
+      letter-spacing: -.01em;
+    }
+    .brand-logo {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(245,166,35,.4);
+    }
+    .brand-dot { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: .2rem;
+      list-style: none; margin: 0 auto; padding: 0;
+    }
+    .nav-links .nav-link {
+      color: rgba(255,255,255,.78) !important;
+      font-size: .9rem; font-weight: 500;
+      padding: .6rem 1rem !important;
+      border-radius: 8px;
+      transition: color .2s var(--ease), background .2s var(--ease);
+      position: relative;
+    }
+    .nav-links .nav-link::after {
+      content: ''; position: absolute; bottom: 4px; left: 50%; right: 50%;
+      height: 2px; background: var(--gold); border-radius: 99px;
+      transition: left .25s var(--ease), right .25s var(--ease);
+    }
+    .nav-links .nav-link:hover,
+    .nav-links .nav-link.active { color: #fff !important; }
+    .nav-links .nav-link:hover::after,
+    .nav-links .nav-link.active::after { left: 1rem; right: 1rem; }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      border-radius: 50px;
+      padding: .55rem 1.4rem !important;
+      font-weight: 600 !important;
+      margin-left: 1rem;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease) !important;
+      box-shadow: 0 4px 16px rgba(245,166,35,.35);
+    }
+    .nav-cta:hover { background: var(--gold-deep) !important; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(245,166,35,.5) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-toggler {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 10px; padding: 8px 10px; cursor: pointer;
+      display: none; flex-direction: column; gap: 5px; margin-left: auto;
+    }
+    .nav-toggler span {
+      display: block; width: 22px; height: 2px;
+      background: var(--white); border-radius: 99px;
+      transition: transform .3s var(--ease), opacity .3s var(--ease);
+    }
+    @media (max-width: 991px) {
+      .nav-toggler { display: flex; }
+      .nav-collapse {
+        position: absolute; top: 72px; left: 0; right: 0;
+        background: rgba(11,31,58,.97); backdrop-filter: blur(20px);
+        padding: 1rem; display: none; flex-direction: column;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .nav-collapse.open { display: flex; }
+      .nav-links { flex-direction: column; align-items: stretch; gap: 0; margin: 0; }
+      .nav-links .nav-link { padding: .8rem 1rem !important; border-radius: 8px; }
+      .nav-cta { margin: .5rem 0 0; text-align: center; }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 45%, #1a4080 100%);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 120px 0 80px;
+    }
+    .hero-noise {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; opacity: .4;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
+    }
+    .hero-orb-1 { width: 580px; height: 580px; background: rgba(26,75,140,.6); top: -180px; right: -120px; }
+    .hero-orb-2 { width: 420px; height: 420px; background: rgba(245,166,35,.15); bottom: -80px; left: -100px; }
+    .hero-orb-3 { width: 260px; height: 260px; background: rgba(46,134,222,.25); top: 30%; left: 38%; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,.12); border: 1px solid rgba(245,166,35,.28);
+      color: var(--gold); border-radius: 50px;
+      padding: 6px 18px; font-size: .8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      animation: slideDown .7s var(--ease) both;
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 6.5vw, 5rem);
+      color: var(--white); line-height: 1.1;
+      font-style: italic; font-weight: 600;
+      animation: slideDown .8s .1s var(--ease) both;
+    }
+    .hero-title em { font-style: normal; color: var(--gold); }
+    .hero-subtitle {
+      color: rgba(255,255,255,.68); font-size: 1.05rem;
+      max-width: 500px; line-height: 1.8; font-weight: 300;
+      animation: slideDown .9s .2s var(--ease) both;
+    }
+    .hero-actions { animation: slideDown 1s .3s var(--ease) both; }
+    .btn-primary-hero {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--navy);
+      border: none; border-radius: 50px; padding: 14px 32px;
+      font-weight: 700; font-size: .95rem;
+      box-shadow: 0 8px 28px rgba(245,166,35,.45);
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+      cursor: pointer;
+    }
+    .btn-primary-hero:hover {
+      background: var(--gold-deep); transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(245,166,35,.55); color: var(--navy);
+    }
+    .btn-ghost-hero {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--white);
+      border: 2px solid rgba(255,255,255,.3); border-radius: 50px;
+      padding: 12px 28px; font-weight: 500; font-size: .95rem;
+      transition: border-color .2s var(--ease), background .2s var(--ease);
+      cursor: pointer;
+    }
+    .btn-ghost-hero:hover { border-color: rgba(255,255,255,.75); background: rgba(255,255,255,.07); color: var(--white); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem;
+      animation: slideUp 1s .45s var(--ease) both;
+    }
+    .hstat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--gold); line-height: 1;
+    }
+    .hstat-lbl {
+      font-size: .72rem; color: rgba(255,255,255,.5);
+      text-transform: uppercase; letter-spacing: .09em;
+      margin-top: 3px;
+    }
+
+    /* Hero Card Panel */
+    .hero-panel {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px; padding: 1.8rem;
+      backdrop-filter: blur(18px);
+      animation: slideLeft 1s .4s var(--ease) both;
+    }
+    .panel-header {
+      font-size: .76rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--gold); margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .panel-school {
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 14px; border-radius: 12px;
+      transition: background .2s var(--ease); cursor: pointer;
+      margin-bottom: 4px;
+    }
+    .panel-school:hover { background: rgba(255,255,255,.07); }
+    .ps-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; flex-shrink: 0;
+    }
+    .ps-name { color: var(--white); font-weight: 600; font-size: .88rem; }
+    .ps-loc { color: rgba(255,255,255,.45); font-size: .74rem; margin-top: 1px; }
+    .ps-badge {
+      margin-left: auto; background: rgba(245,166,35,.18);
+      color: var(--gold); border-radius: 8px;
+      padding: 3px 10px; font-size: .78rem; font-weight: 700; flex-shrink: 0;
+    }
+    .panel-search-bar {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+      border-radius: 50px; padding: 10px 18px; margin-top: 1.2rem;
+      transition: border-color .2s var(--ease);
+    }
+    .panel-search-bar:focus-within { border-color: rgba(245,166,35,.5); }
+    .panel-search-bar input {
+      background: transparent; border: none; outline: none;
+      color: var(--white); font-family: 'Outfit',sans-serif;
+      font-size: .88rem; flex: 1;
+    }
+    .panel-search-bar input::placeholder { color: rgba(255,255,255,.4); }
+    .panel-search-bar button {
+      background: var(--gold); border: none; border-radius: 50px;
+      color: var(--navy); padding: 5px 14px; font-size: .8rem; font-weight: 700;
+      cursor: pointer; transition: background .2s var(--ease);
+    }
+    .panel-search-bar button:hover { background: var(--gold-deep); }
+
+    /* ═══════════════════════════════════════════
+       SECTION SHARED
+    ═══════════════════════════════════════════ */
+    section { overflow: hidden; }
+    .section-py { padding: 90px 0; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .76rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--sky); margin-bottom: .7rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: var(--navy); line-height: 1.15;
+    }
+    .title-line {
+      display: block; width: 48px; height: 4px; border-radius: 99px;
+      background: var(--gold); margin-top: .9rem;
+    }
+    .title-line-center { margin-left: auto; margin-right: auto; }
+
+    /* ═══════════════════════════════════════════
+       ABOUT / INTRO STRIP
+    ═══════════════════════════════════════════ */
+    #about { background: var(--white); }
+    .about-stat {
+      text-align: center; padding: 2.2rem 1.5rem;
+      border-right: 1px solid var(--parchment);
+    }
+    .about-stat:last-child { border-right: none; }
+    .about-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem; font-weight: 700; color: var(--navy);
+      line-height: 1;
+    }
+    .about-stat-num span { color: var(--gold); }
+    .about-stat-lbl { color: var(--slate); font-size: .85rem; margin-top: .4rem; }
+    .about-text { color: var(--slate); line-height: 1.85; }
+
+    /* ═══════════════════════════════════════════
+       SEARCH SECTION
+    ═══════════════════════════════════════════ */
+    #search {
+      background: linear-gradient(175deg, var(--parchment) 0%, #e8edf5 100%);
+      position: relative;
+    }
+    #search::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--gold), var(--sky));
+    }
+    .search-card {
+      background: var(--white); border-radius: 24px;
+      box-shadow: var(--shadow-lg); padding: 2.8rem;
+      border: 1px solid rgba(11,31,58,.06);
+    }
+    .search-field-wrap {
+      display: flex; align-items: center; gap: 10px;
+      border: 2px solid #e4e9f0; border-radius: 14px;
+      padding: 12px 18px; background: var(--cream);
+      transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .search-field-wrap:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(26,75,140,.09);
+      background: var(--white);
+    }
+    .search-field-wrap i { color: var(--slate); font-size: 1rem; flex-shrink: 0; }
+    .search-field-wrap input {
+      border: none; background: transparent; outline: none;
+      font-family: 'Outfit', sans-serif; font-size: .95rem;
+      color: var(--text); flex: 1;
+    }
+    .search-field-wrap input::placeholder { color: #a0aab8; }
+    .filter-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--slate); margin-bottom: .6rem; }
+    .chips-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--cream); border: 2px solid #e2e8f0;
+      border-radius: 50px; padding: 7px 18px;
+      font-size: .83rem; font-weight: 500; cursor: pointer;
+      transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+      color: var(--text); user-select: none;
+    }
+    .chip:hover { border-color: var(--blue); color: var(--blue); background: #eef4ff; }
+    .chip.active { border-color: var(--navy); background: var(--navy); color: var(--white); }
+    .btn-search-main {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 14px; padding: 14px 36px;
+      font-weight: 600; font-size: .97rem; cursor: pointer;
+      transition: background .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+      box-shadow: 0 6px 22px rgba(11,31,58,.25);
+    }
+    .btn-search-main:hover { background: #0e2847; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(11,31,58,.3); }
+    .btn-loc {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--cream); color: var(--navy);
+      border: 2px solid #d0dae8; border-radius: 14px; padding: 12px 24px;
+      font-weight: 600; font-size: .9rem; cursor: pointer;
+      transition: border-color .2s var(--ease), background .2s var(--ease);
+    }
+    .btn-loc:hover { border-color: var(--blue); background: #eef4ff; }
+    #searchStatus { font-size: .82rem; color: var(--slate); }
+
+    /* ═══════════════════════════════════════════
+       SCHOOLS GRID
+    ═══════════════════════════════════════════ */
+    #schools { background: var(--cream); }
+    .school-card {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); overflow: hidden;
+      height: 100%; transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+      border: 1px solid rgba(11,31,58,.06);
+      display: flex; flex-direction: column;
+    }
+    .school-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .card-cover {
+      height: 185px; position: relative; overflow: hidden;
+    }
+    .card-cover-bg { position: absolute; inset: 0; }
+    .card-cover-emoji {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4.5rem;
+      text-shadow: 0 4px 20px rgba(0,0,0,.25);
+    }
+    .card-type-badge {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(0,0,0,.35); backdrop-filter: blur(6px);
+      color: var(--white); border-radius: 8px;
+      padding: 4px 12px; font-size: .74rem; font-weight: 600;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .card-rating-badge {
+      position: absolute; bottom: 14px; left: 14px;
+      background: rgba(245,166,35,.92); color: var(--navy);
+      border-radius: 8px; padding: 3px 10px;
+      font-size: .78rem; font-weight: 700;
+    }
+    .card-body {
+      padding: 1.4rem 1.4rem .8rem; flex: 1;
+    }
+    .card-name {
+      font-size: 1.15rem; font-weight: 700; color: var(--navy);
+      margin-bottom: .3rem; font-family: 'Cormorant Garamond', serif;
+      line-height: 1.25;
+    }
+    .card-loc {
+      font-size: .8rem; color: var(--slate);
+      display: flex; align-items: center; gap: 4px; margin-bottom: .9rem;
+    }
+    .card-loc i { color: var(--gold); font-size: .7rem; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: .9rem; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #f0f4ff; color: var(--blue);
+      border-radius: 6px; padding: 3px 9px;
+      font-size: .72rem; font-weight: 600;
+    }
+    .card-summary { font-size: .82rem; color: var(--slate); line-height: 1.65; }
+    .card-footer {
+      padding: .9rem 1.4rem 1.2rem;
+      border-top: 1px solid #f0f4f8;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: .5rem;
+    }
+    .intake-info { font-size: .8rem; color: var(--slate); }
+    .intake-info strong { color: var(--navy); font-weight: 700; }
+    .btn-detail {
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 10px; padding: 8px 20px;
+      font-size: .82rem; font-weight: 600; cursor: pointer;
+      transition: background .2s var(--ease), transform .2s var(--ease);
+    }
+    .btn-detail:hover { background: var(--blue); transform: scale(1.04); }
+
+    /* No results */
+    .no-results {
+      text-align: center; padding: 5rem 1rem;
+      color: var(--slate);
+    }
+    .no-results i { font-size: 3.5rem; display: block; margin-bottom: 1rem; opacity: .4; }
+
+    /* Load more */
+    .btn-load-more {
+      background: var(--white); color: var(--navy);
+      border: 2px solid var(--navy); border-radius: 50px;
+      padding: 12px 40px; font-weight: 600; font-size: .95rem;
+      cursor: pointer; transition: all .2s var(--ease);
+    }
+    .btn-load-more:hover { background: var(--navy); color: var(--white); transform: translateY(-2px); }
+
+    /* ═══════════════════════════════════════════
+       FEATURES
+    ═══════════════════════════════════════════ */
+    #features {
+      background: linear-gradient(145deg, var(--navy) 0%, #0f2a50 100%);
+      position: relative; overflow: hidden;
+    }
+    #features::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: rgba(26,75,140,.4); filter: blur(100px);
+      pointer-events: none;
+    }
+    .feat-card {
+      padding: 2rem; border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      transition: background .3s var(--ease), transform .3s var(--ease), border-color .3s var(--ease);
+      height: 100%;
+    }
+    .feat-card:hover {
+      background: rgba(255,255,255,.09); transform: translateY(-5px);
+      border-color: rgba(245,166,35,.35);
+    }
+    .feat-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: rgba(245,166,35,.14); border: 1px solid rgba(245,166,35,.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--gold); margin-bottom: 1.1rem;
+    }
+    .feat-title { color: var(--white); font-size: 1.05rem; margin-bottom: .5rem; }
+    .feat-text { color: rgba(255,255,255,.55); font-size: .87rem; line-height: 1.7; }
+
+    /* ═══════════════════════════════════════════
+       SITE MAP
+    ═══════════════════════════════════════════ */
+    #sitemap { background: var(--white); }
+    .map-container { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); border: 3px solid var(--parchment); }
+    #map-frame {
+      height: 460px; background: var(--parchment);
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .map-placeholder-inner {
+      text-align: center;
+    }
+    .map-pin {
+      width: 60px; height: 60px; margin: 0 auto 1.2rem;
+      background: var(--navy); border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex; align-items: center; justify-content: center;
+      animation: pinBounce 2s ease-in-out infinite;
+      box-shadow: 0 6px 24px rgba(11,31,58,.3);
+    }
+    .map-pin span { transform: rotate(45deg); font-size: 1.6rem; }
+    @keyframes pinBounce {
+      0%,100% { transform: rotate(-45deg) translateY(0); }
+      50% { transform: rotate(-45deg) translateY(-12px); }
+    }
+    .school-list-panel {
+      border: 1px solid var(--parchment); border-radius: var(--radius);
+      overflow: hidden; max-height: 460px; overflow-y: auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .school-list-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 16px; border-bottom: 1px solid var(--parchment);
+      cursor: pointer; transition: background .2s var(--ease);
+    }
+    .school-list-item:last-child { border-bottom: none; }
+    .school-list-item:hover { background: var(--cream); }
+    .sli-num {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--navy); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .sli-name { font-weight: 600; font-size: .87rem; color: var(--navy); }
+    .sli-addr { font-size: .74rem; color: var(--slate); margin-top: 1px; }
+    .btn-locate-sm {
+      margin-left: auto; background: var(--gold); border: none; border-radius: 8px;
+      color: var(--navy); padding: 5px 12px; font-size: .74rem; font-weight: 700;
+      cursor: pointer; transition: background .2s var(--ease); flex-shrink: 0;
+    }
+    .btn-locate-sm:hover { background: var(--gold-deep); }
+
+    /* ═══════════════════════════════════════════
+       GALLERY / FACILITIES VISUAL
+    ═══════════════════════════════════════════ */
+    #facilities { background: var(--parchment); }
+    .facility-visual {
+      background: var(--white); border-radius: var(--radius);
+      padding: 2rem; box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(11,31,58,.06);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .facility-visual:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .fv-icon { font-size: 2.8rem; margin-bottom: .8rem; }
+    .fv-title { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+    .fv-text { font-size: .83rem; color: var(--slate); line-height: 1.65; }
+    .fv-count {
+      display: inline-block; margin-top: .8rem;
+      background: #f0f4ff; color: var(--blue);
+      border-radius: 8px; padding: 3px 12px;
+      font-size: .78rem; font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════════════════ */
+    #testimonials { background: var(--cream); }
+    .tcard {
+      background: var(--white); border-radius: var(--radius);
+      padding: 2rem; box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(11,31,58,.06); height: 100%;
+    }
+    .tcard-stars { color: var(--gold); font-size: .9rem; margin-bottom: .8rem; }
+    .tcard-text { font-size: .9rem; color: var(--slate); line-height: 1.75; font-style: italic; margin-bottom: 1.2rem; }
+    .tcard-author { display: flex; align-items: center; gap: 10px; }
+    .tcard-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: var(--white);
+      flex-shrink: 0;
+    }
+    .tcard-name { font-weight: 600; font-size: .87rem; color: var(--navy); }
+    .tcard-role { font-size: .74rem; color: var(--slate); }
+
+    /* ═══════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════ */
+    #contact {
+      background: linear-gradient(165deg, #eef3fb 0%, var(--parchment) 100%);
+    }
+    .contact-info-card {
+      background: var(--navy); color: var(--white);
+      border-radius: var(--radius); padding: 2.4rem;
+      height: 100%;
+    }
+    .cic-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.8rem; }
+    .cic-item:last-child { margin-bottom: 0; }
+    .cic-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(245,166,35,.18); border: 1px solid rgba(245,166,35,.28);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--gold); flex-shrink: 0;
+    }
+    .cic-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.45); margin-bottom: 3px; }
+    .cic-val { font-size: .9rem; color: rgba(255,255,255,.88); }
+    .contact-form-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 2.4rem; box-shadow: var(--shadow-lg);
+    }
+    .form-label { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--slate); margin-bottom: 6px; }
+    .form-ctrl {
+      width: 100%; border: 2px solid #e4e9f0; border-radius: 12px;
+      padding: 12px 16px; font-family: 'Outfit', sans-serif;
+      font-size: .9rem; outline: none; background: var(--cream);
+      transition: border-color .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+      color: var(--text);
+    }
+    .form-ctrl:focus {
+      border-color: var(--blue); background: var(--white);
+      box-shadow: 0 0 0 4px rgba(26,75,140,.09);
+    }
+    textarea.form-ctrl { resize: vertical; min-height: 120px; }
+    .btn-send {
+      width: 100%; background: var(--navy); color: var(--white);
+      border: none; border-radius: 12px; padding: 14px;
+      font-weight: 700; font-size: .97rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+      box-shadow: 0 6px 22px rgba(11,31,58,.22);
+    }
+    .btn-send:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(11,31,58,.28); }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    #footer { background: var(--navy); padding: 5rem 0 2.5rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); }
+    .footer-brand span { color: var(--gold); }
+    .footer-desc { color: rgba(255,255,255,.45); font-size: .88rem; line-height: 1.7; margin-top: .6rem; max-width: 280px; }
+    .footer-heading { color: var(--white); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: .5rem; }
+    .footer-links a { color: rgba(255,255,255,.48); font-size: .87rem; transition: color .2s var(--ease); }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-hr { border-color: rgba(255,255,255,.08); margin: 3rem 0 2rem; }
+    .footer-bottom { color: rgba(255,255,255,.35); font-size: .82rem; }
+    .social-links { display: flex; gap: 8px; margin-top: 1.4rem; }
+    .social-btn {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.55); font-size: .95rem;
+      transition: background .2s var(--ease), color .2s var(--ease);
+    }
+    .social-btn:hover { background: var(--gold); color: var(--navy); }
+    .nl-input-row { display: flex; gap: 8px; margin-top: .8rem; }
+    .nl-input {
+      flex: 1; border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07); border-radius: 50px;
+      padding: 10px 18px; color: var(--white);
+      font-family: 'Outfit', sans-serif; font-size: .87rem; outline: none;
+      transition: border-color .2s var(--ease);
+    }
+    .nl-input::placeholder { color: rgba(255,255,255,.35); }
+    .nl-input:focus { border-color: rgba(245,166,35,.5); }
+    .nl-btn {
+      background: var(--gold); border: none; border-radius: 50px;
+      color: var(--navy); padding: 10px 20px; font-weight: 700;
+      font-size: .83rem; cursor: pointer; transition: background .2s var(--ease); flex-shrink: 0;
+    }
+    .nl-btn:hover { background: var(--gold-deep); }
+
+    /* ═══════════════════════════════════════════
+       BACK TO TOP
+    ═══════════════════════════════════════════ */
+    #backTop {
+      position: fixed; bottom: 28px; right: 28px; z-index: 900;
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--navy); color: var(--white);
+      border: none; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      font-size: 1.1rem; box-shadow: var(--shadow);
+      transition: background .2s var(--ease), transform .2s var(--ease);
+    }
+    #backTop:hover { background: var(--gold); color: var(--navy); transform: translateY(-3px); }
+    #backTop.show { display: flex; animation: fadeIn .3s var(--ease); }
+
+    /* ═══════════════════════════════════════════
+       MODAL
+    ═══════════════════════════════════════════ */
+    .modal-header {
+      background: linear-gradient(135deg, var(--navy), #162f5a);
+      color: var(--white);
+      border-bottom: none;
+    }
+    .modal-header .btn-close { filter: invert(1) opacity(.7); }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; }
+    .detail-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 0; border-bottom: 1px solid var(--parchment);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .dr-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--parchment); color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .dr-label { font-size: .75rem; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; }
+    .dr-val { font-weight: 600; font-size: .9rem; color: var(--text); margin-top: 2px; }
+    .pill-yes { background: #dcfce7; color: #166534; border-radius: 6px; padding: 2px 10px; font-size: .78rem; font-weight: 700; }
+    .pill-no  { background: #fee2e2; color: #991b1b; border-radius: 6px; padding: 2px 10px; font-size: .78rem; font-weight: 700; }
+    .btn-dl {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--navy); border: none;
+      border-radius: 10px; padding: 11px 22px; font-weight: 700;
+      cursor: pointer; transition: background .2s var(--ease), transform .2s var(--ease);
+    }
+    .btn-dl:hover { background: var(--gold-deep); transform: translateY(-1px); }
+    .maps-link {
+      color: var(--blue); text-decoration: none; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .maps-link:hover { color: var(--navy); }
+
+    /* ═══════════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════════ */
+    #toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      background: var(--navy); color: var(--white);
+      border-radius: 14px; padding: 13px 22px;
+      display: none; align-items: center; gap: 10px;
+      font-size: .88rem; z-index: 9999;
+      box-shadow: 0 12px 48px rgba(11,31,58,.35);
+      white-space: nowrap;
+      animation: slideUp .4s var(--ease);
+    }
+    #toast.show { display: flex; }
+    #toast i { color: #4ade80; font-size: 1rem; }
+
+    /* ═══════════════════════════════════════════
+       REVEAL
+    ═══════════════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s var(--ease), transform .65s var(--ease); }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════════════════
+       KEYFRAMES
+    ═══════════════════════════════════════════ */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(22px) translateX(-50%); }
+      to   { opacity: 1; transform: translateY(0) translateX(-50%); }
+    }
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 767px) {
+      .hero-stats { gap: 1.5rem; }
+      .hstat-num { font-size: 1.7rem; }
+      .section-py { padding: 60px 0; }
+      .search-card { padding: 1.6rem; }
+      .about-stat { border-right: none; border-bottom: 1px solid var(--parchment); }
+      .about-stat:last-child { border-bottom: none; }
+    }
+    @media (max-width: 575px) {
+      .hero-title { font-size: 2.4rem; }
+      .btn-primary-hero, .btn-ghost-hero { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAVBAR
+══════════════════════════════════ -->
+<nav id="mainNav" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#hero" aria-label="SchoolsInfo Home">
+        <div class="brand-logo">🎓</div>
+        Schools<span class="brand-dot">Info</span>
+      </a>
+      <button class="nav-toggler" id="navToggler" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-collapse" id="navCollapse">
+        <ul class="nav-links" id="navLinks">
+          <li><a class="nav-link active" href="#hero">Home</a></li>
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="#search">Search</a></li>
+          <li><a class="nav-link" href="#schools">Schools</a></li>
+          <li><a class="nav-link" href="#features">Features</a></li>
+          <li><a class="nav-link" href="#sitemap">Site Map</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+          <li><a class="nav-link nav-cta" href="#search"><i class="bi bi-search me-1"></i>Find School</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="hero-eyebrow">
+          <i class="bi bi-stars"></i> Pakistan's #1 School Directory
+        </div>
+        <h1 class="hero-title mb-4">
+          Find the <em>Perfect School</em> for Your Child
+        </h1>
+        <p class="hero-subtitle mb-4">
+          Explore schools across Karachi — compare facilities, check locations, intake capacity, and more — all without leaving home.
+        </p>
+        <div class="hero-actions d-flex flex-wrap gap-3">
+          <a href="#search" class="btn-primary-hero">
+            <i class="bi bi-search"></i> Search Schools
+          </a>
+          <a href="#sitemap" class="btn-ghost-hero">
+            <i class="bi bi-map"></i> View Map
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hstat-num" data-count="120">0</div>
+            <div class="hstat-lbl">Schools Listed</div>
+          </div>
+          <div>
+            <div class="hstat-num" data-count="18">0</div>
+            <div class="hstat-lbl">Areas Covered</div>
+          </div>
+          <div>
+            <div class="hstat-num" data-count="50000">0</div>
+            <div class="hstat-lbl">Students Helped</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 offset-lg-1">
+        <div class="hero-panel">
+          <div class="panel-header"><i class="bi bi-stars"></i> Top Rated Schools</div>
+          <div class="panel-school" onclick="openModal(1)">
+            <div class="ps-icon" style="background:rgba(30,80,160,.15)">🏫</div>
+            <div>
+              <div class="ps-name">Beaconhouse School System</div>
+              <div class="ps-loc"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i> Gulshan-e-Iqbal</div>
+            </div>
+            <div class="ps-badge">⭐ 4.8</div>
+          </div>
+          <div class="panel-school" onclick="openModal(2)">
+            <div class="ps-icon" style="background:rgba(6,95,70,.12)">🎓</div>
+            <div>
+              <div class="ps-name">The City School</div>
+              <div class="ps-loc"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i> Clifton</div>
+            </div>
+            <div class="ps-badge">⭐ 4.7</div>
+          </div>
+          <div class="panel-school" onclick="openModal(3)">
+            <div class="ps-icon" style="background:rgba(124,58,237,.12)">📚</div>
+            <div>
+              <div class="ps-name">Nixor College</div>
+              <div class="ps-loc"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i> DHA Phase 6</div>
+            </div>
+            <div class="ps-badge">⭐ 4.9</div>
+          </div>
+          <div class="panel-school" onclick="openModal(4)">
+            <div class="ps-icon" style="background:rgba(146,64,14,.12)">🏆</div>
+            <div>
+              <div class="ps-name">Karachi Grammar School</div>
+              <div class="ps-loc"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i> Civil Lines</div>
+            </div>
+            <div class="ps-badge">⭐ 4.9</div>
+          </div>
+          <div class="panel-search-bar mt-3">
+            <i class="bi bi-search" style="color:rgba(255,255,255,.4)"></i>
+            <input type="text" placeholder="Quick search a school…" onkeydown="if(event.key==='Enter'){document.getElementById('searchName').value=this.value;document.getElementById('search').scrollIntoView({behavior:'smooth'});}"/>
+            <button onclick="document.getElementById('search').scrollIntoView({behavior:'smooth'})">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     ABOUT / STATS
+══════════════════════════════════ -->
+<section id="about" class="section-py">
+  <div class="container">
+    <div class="row g-0 border rounded-4 overflow-hidden shadow-sm bg-white mb-5">
+      <div class="col-6 col-md-3 about-stat reveal">
+        <div class="about-stat-num"><span id="cnt1">0</span><span style="color:var(--gold)">+</span></div>
+        <div class="about-stat-lbl">Schools Listed</div>
+      </div>
+      <div class="col-6 col-md-3 about-stat reveal" style="transition-delay:.1s">
+        <div class="about-stat-num"><span id="cnt2">0</span><span style="color:var(--gold)">+</span></div>
+        <div class="about-stat-lbl">City Areas</div>
+      </div>
+      <div class="col-6 col-md-3 about-stat reveal" style="transition-delay:.2s">
+        <div class="about-stat-num"><span id="cnt3">0</span><span style="color:var(--gold)">K+</span></div>
+        <div class="about-stat-lbl">Families Assisted</div>
+      </div>
+      <div class="col-6 col-md-3 about-stat reveal" style="transition-delay:.3s">
+        <div class="about-stat-num"><span id="cnt4">0</span><span style="color:var(--gold)">%</span></div>
+        <div class="about-stat-lbl">Verified Listings</div>
+      </div>
+    </div>
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5 reveal">
+        <span class="eyebrow"><i class="bi bi-info-circle me-1"></i>About SchoolsInfo</span>
+        <h2 class="section-title">Your Trusted School Discovery Platform</h2>
+        <span class="title-line d-block"></span>
+      </div>
+      <div class="col-lg-7 reveal" style="transition-delay:.15s">
+        <p class="about-text mb-3">
+          Finding the right school for your child has always been a challenge. Visiting each school physically, collecting brochures, and asking around takes weeks. <strong>SchoolsInfo</strong> changes that — we bring every school's information to your fingertips.
+        </p>
+        <p class="about-text mb-3">
+          Our platform lists schools across all major areas of Karachi with detailed information about facilities, intake capacity, curriculum type, sports offerings, and location. Parents can filter, search, and compare schools in seconds.
+        </p>
+        <p class="about-text">
+          Built with HTML5, JavaScript, and the Google Maps Geolocation API, SchoolsInfo works seamlessly across all modern browsers — Chrome, Firefox, Edge, and more.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SEARCH
+══════════════════════════════════ -->
+<section id="search" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow"><i class="bi bi-search me-1"></i>Smart Search</span>
+      <h2 class="section-title">Find Schools by Location &amp; Facilities</h2>
+      <span class="title-line title-line-center d-block"></span>
+    </div>
+    <div class="search-card reveal" style="transition-delay:.1s">
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label class="filter-label">Search by Name or School</label>
+          <div class="search-field-wrap">
+            <i class="bi bi-building"></i>
+            <input type="text" id="searchName" placeholder="e.g. Beaconhouse, City School…" aria-label="Search by school name"/>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="filter-label">Search by Area / Location</label>
+          <div class="search-field-wrap">
+            <i class="bi bi-geo-alt"></i>
+            <input type="text" id="searchLoc" placeholder="e.g. Clifton, DHA, North Nazimabad…" aria-label="Search by location"/>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <p class="filter-label">Filter by Available Facilities</p>
+        <div class="chips-row" id="filterChips">
+          <button class="chip active" data-filter="all"><i class="bi bi-grid-3x3-gap-fill"></i>All Schools</button>
+          <button class="chip" data-filter="library"><i class="bi bi-book-fill"></i>Library</button>
+          <button class="chip" data-filter="canteen"><i class="bi bi-cup-hot-fill"></i>Canteen</button>
+          <button class="chip" data-filter="boarding"><i class="bi bi-house-door-fill"></i>Boarding</button>
+          <button class="chip" data-filter="sports"><i class="bi bi-trophy-fill"></i>Sports</button>
+          <button class="chip" data-filter="transport"><i class="bi bi-bus-front-fill"></i>Transport</button>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap align-items-center gap-3">
+        <button class="btn-search-main" onclick="doSearch()">
+          <i class="bi bi-search"></i> Search Schools
+        </button>
+        <button class="btn-loc" onclick="useMyLocation()">
+          <i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i> Use My Location
+        </button>
+        <span id="searchStatus"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SCHOOLS GRID
+══════════════════════════════════ -->
+<section id="schools" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow"><i class="bi bi-buildings me-1"></i>School Directory</span>
+      <h2 class="section-title">Explore Schools in Karachi</h2>
+      <span class="title-line title-line-center d-block"></span>
+      <p class="text-muted mt-3" id="resultCount" style="font-size:.9rem">Showing all schools</p>
+    </div>
+    <div class="row g-4" id="schoolsGrid"></div>
+    <div class="text-center mt-5 reveal">
+      <button class="btn-load-more" id="btnLoadMore">
+        <i class="bi bi-arrow-down-circle me-2"></i>Load More Schools
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FACILITIES
+══════════════════════════════════ -->
+<section id="facilities" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow"><i class="bi bi-buildings me-1"></i>What We Track</span>
+      <h2 class="section-title">Facilities We Cover</h2>
+      <span class="title-line title-line-center d-block"></span>
+    </div>
+    <div class="row g-4 text-center">
+      <div class="col-6 col-md-4 col-lg-2 reveal">
+        <div class="facility-visual">
+          <div class="fv-icon">📚</div>
+          <div class="fv-title">Library</div>
+          <div class="fv-text">Dedicated reading rooms and resource centres</div>
+          <span class="fv-count">5 Schools</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2 reveal" style="transition-delay:.07s">
+        <div class="facility-visual">
+          <div class="fv-icon">🍽️</div>
+          <div class="fv-title">Canteen</div>
+          <div class="fv-text">Supervised in-campus cafeteria</div>
+          <span class="fv-count">5 Schools</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2 reveal" style="transition-delay:.14s">
+        <div class="facility-visual">
+          <div class="fv-icon">🏠</div>
+          <div class="fv-title">Boarding</div>
+          <div class="fv-text">On-campus residential facilities</div>
+          <span class="fv-count">1 School</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2 reveal" style="transition-delay:.21s">
+        <div class="facility-visual">
+          <div class="fv-icon">🏆</div>
+          <div class="fv-title">Sports</div>
+          <div class="fv-text">Cricket, football, swimming & more</div>
+          <span class="fv-count">6 Schools</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2 reveal" style="transition-delay:.28s">
+        <div class="facility-visual">
+          <div class="fv-icon">🚌</div>
+          <div class="fv-title">Transport</div>
+          <div class="fv-text">School bus routes across the city</div>
+          <span class="fv-count">5 Schools</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2 reveal" style="transition-delay:.35s">
+        <div class="facility-visual">
+          <div class="fv-icon">🖥️</div>
+          <div class="fv-title">Computer Lab</div>
+          <div class="fv-text">Modern IT labs for digital learning</div>
+          <span class="fv-count">4 Schools</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FEATURES
+══════════════════════════════════ -->
+<section id="features" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow" style="color:var(--gold)"><i class="bi bi-stars me-1"></i>Why SchoolsInfo</span>
+      <h2 class="section-title" style="color:var(--white)">Everything You Need to Decide</h2>
+      <span class="title-line title-line-center d-block"></span>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 reveal"><div class="feat-card">
+        <div class="feat-icon"><i class="bi bi-geo-alt-fill"></i></div>
+        <h4 class="feat-title">GeoLocation Maps</h4>
+        <p class="feat-text">Each school's exact location is shown on Google Maps using the HTML5 Geolocation API — just click "Locate" next to any school.</p>
+      </div></div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.08s"><div class="feat-card">
+        <div class="feat-icon"><i class="bi bi-funnel-fill"></i></div>
+        <h4 class="feat-title">Advanced Filtering</h4>
+        <p class="feat-text">Filter by library, canteen, boarding, transport, sports, and more to find schools that match your exact requirements in seconds.</p>
+      </div></div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.16s"><div class="feat-card">
+        <div class="feat-icon"><i class="bi bi-file-earmark-word-fill"></i></div>
+        <h4 class="feat-title">Download Brochures</h4>
+        <p class="feat-text">Detailed school information is available as downloadable Word documents so you can review and share offline at your convenience.</p>
+      </div></div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.24s"><div class="feat-card">
+        <div class="feat-icon"><i class="bi bi-people-fill"></i></div>
+        <h4 class="feat-title">Intake Capacity</h4>
+        <p class="feat-text">Know the maximum student intake capacity for every school before you visit — saving precious time and effort for your family.</p>
+      </div></div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.32s"><div class="feat-card">
+        <div class="feat-icon"><i class="bi bi-shield-check-fill"></i></div>
+        <h4 class="feat-title">Verified Listings</h4>
+        <p class="feat-text">All school listings are manually verified and regularly updated to ensure you always get accurate and trustworthy information.</p>
+      </div></div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.40s"><div class="feat-card">
+        <div class="feat-icon"><i class="bi bi-phone-fill"></i></div>
+        <h4 class="feat-title">Fully Responsive</h4>
+        <p class="feat-text">Works beautifully on all devices and browsers — Chrome, Firefox, Edge, and IE — on desktop, tablet, and mobile screens.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SITE MAP
+══════════════════════════════════ -->
+<section id="sitemap" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow"><i class="bi bi-map me-1"></i>Site Map</span>
+      <h2 class="section-title">Schools Across the City</h2>
+      <span class="title-line title-line-center d-block"></span>
+      <p class="text-muted mt-3" style="font-size:.9rem">Click <strong>Locate</strong> to open a school in Google Maps, or use <strong>Show My Location</strong> to see nearby schools.</p>
+    </div>
+    <div class="row g-4 reveal">
+      <div class="col-lg-5">
+        <div class="school-list-panel" id="mapSchoolList"></div>
+      </div>
+      <div class="col-lg-7">
+        <div class="map-container">
+          <div id="map-frame">
+            <div class="map-placeholder-inner">
+              <div class="map-pin"><span>📍</span></div>
+              <h5 class="fw-bold" style="color:var(--navy)">Interactive Map</h5>
+              <p class="text-muted mt-2 mb-3 px-3" style="font-size:.88rem">Click <strong>Locate</strong> on any school or use your live location.</p>
+              <button class="btn-search-main" onclick="useMyLocation()">
+                <i class="bi bi-geo-alt-fill"></i> Show My Location
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════ -->
+<section id="testimonials" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow"><i class="bi bi-chat-quote me-1"></i>Testimonials</span>
+      <h2 class="section-title">What Parents Are Saying</h2>
+      <span class="title-line title-line-center d-block"></span>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="tcard">
+          <div class="tcard-stars">★★★★★</div>
+          <p class="tcard-text">"SchoolsInfo saved us so much time. We shortlisted 4 schools in one evening and visited only those — ended up finding the perfect school for our daughter."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar" style="background:var(--blue)">S</div>
+            <div>
+              <div class="tcard-name">Sara Ahmed</div>
+              <div class="tcard-role">Parent, Gulshan-e-Iqbal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.1s">
+        <div class="tcard">
+          <div class="tcard-stars">★★★★★</div>
+          <p class="tcard-text">"The geolocation feature is brilliant. I could see exactly where each school was on the map and figure out which ones are closest to our new house in DHA."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar" style="background:var(--navy)">K</div>
+            <div>
+              <div class="tcard-name">Kamran Mirza</div>
+              <div class="tcard-role">Parent, DHA Phase 5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 reveal" style="transition-delay:.2s">
+        <div class="tcard">
+          <div class="tcard-stars">★★★★☆</div>
+          <p class="tcard-text">"The downloadable brochures are a fantastic touch. I printed them and discussed with my husband which school's facilities matched what we needed most."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar" style="background:var(--gold-deep)">F</div>
+            <div>
+              <div class="tcard-name">Fatima Qureshi</div>
+              <div class="tcard-role">Parent, North Nazimabad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT
+══════════════════════════════════ -->
+<section id="contact" class="section-py">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="eyebrow"><i class="bi bi-envelope me-1"></i>Contact</span>
+      <h2 class="section-title">Get In Touch</h2>
+      <span class="title-line title-line-center d-block"></span>
+    </div>
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4 reveal">
+        <div class="contact-info-card">
+          <h4 style="color:var(--white);margin-bottom:1.8rem;font-size:1.4rem">Contact Information</h4>
+          <div class="cic-item">
+            <div class="cic-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <div class="cic-label">Office Address</div>
+              <div class="cic-val">Block 14, Gulshan-e-Iqbal, Karachi, Pakistan</div>
+            </div>
+          </div>
+          <div class="cic-item">
+            <div class="cic-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <div class="cic-label">Phone Number</div>
+              <div class="cic-val">+92-55555555</div>
+            </div>
+          </div>
+          <div class="cic-item">
+            <div class="cic-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <div class="cic-label">Email Address</div>
+              <div class="cic-val">info@schoolsinfo.pk</div>
+            </div>
+          </div>
+          <div class="cic-item">
+            <div class="cic-icon"><i class="bi bi-clock-fill"></i></div>
+            <div>
+              <div class="cic-label">Office Hours</div>
+              <div class="cic-val">Mon – Fri: 9:00 AM – 6:00 PM</div>
+            </div>
+          </div>
+          <div class="d-flex gap-2 mt-3">
+            <a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 reveal" style="transition-delay:.15s">
+        <div class="contact-form-card">
+          <h5 style="color:var(--navy);margin-bottom:1.6rem;font-family:'Cormorant Garamond',serif;font-size:1.5rem">Send us a Message</h5>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-ctrl" id="cName" placeholder="Your full name"/>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-ctrl" id="cEmail" placeholder="your@email.com"/>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-ctrl" id="cPhone" placeholder="+92 300 0000000"/>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Subject *</label>
+              <input type="text" class="form-ctrl" id="cSubject" placeholder="How can we help?"/>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Your Message *</label>
+              <textarea class="form-ctrl" id="cMsg" placeholder="Tell us more about your inquiry…"></textarea>
+            </div>
+            <div class="col-12">
+              <button class="btn-send" onclick="sendMsg()">
+                <i class="bi bi-send-fill"></i> Send Message
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="footer-brand">Schools<span>Info</span></div>
+        <p class="footer-desc">Your trusted guide to finding the perfect school for your child across Karachi.</p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          <a href="#" class="social-btn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-2">
+        <p class="footer-heading">Quick Links</p>
+        <ul class="footer-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#search">Search</a></li>
+          <li><a href="#schools">Schools</a></li>
+          <li><a href="#sitemap">Site Map</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 col-lg-2">
+        <p class="footer-heading">Facilities</p>
+        <ul class="footer-links">
+          <li><a href="#search">Library</a></li>
+          <li><a href="#search">Canteen</a></li>
+          <li><a href="#search">Boarding</a></li>
+          <li><a href="#search">Sports</a></li>
+          <li><a href="#search">Transport</a></li>
+          <li><a href="#search">Computer Lab</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <p class="footer-heading">Stay Updated</p>
+        <p style="color:rgba(255,255,255,.45);font-size:.87rem;margin-bottom:.2rem">Get notified when new schools are added in your area.</p>
+        <div class="nl-input-row">
+          <input type="email" class="nl-input" id="nlEmail" placeholder="your@email.com" aria-label="Newsletter email"/>
+          <button class="nl-btn" onclick="subscribe()">Subscribe</button>
+        </div>
+        <p style="color:rgba(255,255,255,.28);font-size:.75rem;margin-top:.7rem">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+    <hr class="footer-hr"/>
+    <div class="d-flex flex-wrap justify-content-between gap-2">
+      <span class="footer-bottom">© 2026 SchoolsInfo. All rights reserved.</span>
+      <span class="footer-bottom">Made with <span style="color:#e74c3c">❤</span> for parents in Karachi, Pakistan</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back To Top -->
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<!-- Toast -->
+<div id="toast" role="alert" aria-live="polite">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<!-- ══════════════════════════════════
+     SCHOOL DETAIL MODAL
+══════════════════════════════════ -->
+<div class="modal fade" id="schoolModal" tabindex="-1" aria-labelledby="modalTitle" aria-modal="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
+      <div class="modal-header px-4 py-3">
+        <h5 class="modal-title" id="modalTitle">School Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body px-4 py-3" id="modalBody"></div>
+      <div class="modal-footer border-0 px-4 pb-4 pt-0 gap-2">
+        <button class="btn-dl" onclick="dlDoc()"><i class="bi bi-file-earmark-word-fill"></i>Download Brochure (.doc)</button>
+        <button type="button" class="btn btn-light rounded-3 fw-600" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════
+   SCHOOL DATA
+═══════════════════════════════════════════ */
+const SCHOOLS = [
+  {
+    id: 1, name: "Beaconhouse School System",
+    area: "Gulshan-e-Iqbal", city: "Karachi",
+    rating: 4.8, intake: 1200, emoji: "🏫",
+    bg: "linear-gradient(135deg,#1a3c5e,#2d6a9f)",
+    type: "O/A Level (Cambridge)",
+    library: true, canteen: true, boarding: false, sports: true, transport: true,
+    sportsList: "Cricket, Football, Basketball, Badminton",
+    phone: "+92-21-34832910",
+    email: "info@beaconhouse.net",
+    established: "1975",
+    summary: "One of Pakistan's largest and most respected school networks with state-of-the-art facilities, a dedicated faculty, and a Cambridge-affiliated curriculum. Beaconhouse fosters academic excellence, critical thinking, and character development across its many campuses.",
+    lat: 24.9294, lng: 67.1033
+  },
+  {
+    id: 2, name: "The City School",
+    area: "Clifton", city: "Karachi",
+    rating: 4.7, intake: 950, emoji: "🎓",
+    bg: "linear-gradient(135deg,#065f46,#059669)",
+    type: "O/A Level (Cambridge)",
+    library: true, canteen: true, boarding: true, sports: true, transport: true,
+    sportsList: "Football, Cricket, Swimming, Tennis",
+    phone: "+92-21-35860531",
+    email: "info@cityschool.edu.pk",
+    established: "1978",
+    summary: "A premier institution offering holistic education with a strong focus on academic excellence, character building, and sports development. The City School's Clifton campus is known for its vibrant learning environment and dedicated extracurricular programmes.",
+    lat: 24.8099, lng: 67.0366
+  },
+  {
+    id: 3, name: "Nixor College",
+    area: "DHA Phase 6", city: "Karachi",
+    rating: 4.9, intake: 600, emoji: "📚",
+    bg: "linear-gradient(135deg,#7c3aed,#a855f7)",
+    type: "A Level / IB Diploma",
+    library: true, canteen: true, boarding: false, sports: true, transport: false,
+    sportsList: "Basketball, Volleyball, Chess, Track & Field",
+    phone: "+92-21-35315153",
+    email: "info@nixor.edu.pk",
+    established: "2006",
+    summary: "Nixor is renowned for sending students to top global universities including Oxbridge and Ivy League. It offers an intellectually stimulating environment with world-class instructors and an emphasis on self-directed learning, debate, and leadership.",
+    lat: 24.7954, lng: 67.0729
+  },
+  {
+    id: 4, name: "Karachi Grammar School",
+    area: "Civil Lines", city: "Karachi",
+    rating: 4.9, intake: 800, emoji: "🏆",
+    bg: "linear-gradient(135deg,#92400e,#d97706)",
+    type: "O/A Level (Cambridge)",
+    library: true, canteen: true, boarding: false, sports: true, transport: true,
+    sportsList: "Cricket, Hockey, Swimming, Squash, Rowing",
+    phone: "+92-21-35220017",
+    email: "info@kgs.edu.pk",
+    established: "1847",
+    summary: "Established in 1847, KGS is Pakistan's oldest private school and has produced generations of leaders, professionals, scientists, and academics. Its rich heritage, vast grounds, and rigorous academics make it one of the most sought-after schools in the country.",
+    lat: 24.8680, lng: 67.0100
+  },
+  {
+    id: 5, name: "Roots International School",
+    area: "North Nazimabad", city: "Karachi",
+    rating: 4.5, intake: 1100, emoji: "🌱",
+    bg: "linear-gradient(135deg,#0e4d38,#16a34a)",
+    type: "Matric / O Level",
+    library: true, canteen: true, boarding: false, sports: true, transport: true,
+    sportsList: "Cricket, Football, Volleyball",
+    phone: "+92-21-36633560",
+    email: "roots.nn@rootsinternational.pk",
+    established: "1988",
+    summary: "Roots International offers quality education at affordable rates with a strong focus on character development, discipline, and community values. Their North Nazimabad campus is well-regarded for its disciplined environment and passionate teaching staff.",
+    lat: 24.9494, lng: 67.0600
+  },
+  {
+    id: 6, name: "Happy Hands School",
+    area: "Korangi", city: "Karachi",
+    rating: 4.3, intake: 700, emoji: "✋",
+    bg: "linear-gradient(135deg,#b45309,#f59e0b)",
+    type: "Matric",
+    library: true, canteen: false, boarding: false, sports: true, transport: true,
+    sportsList: "Cricket, Kabaddi, Athletics",
+    phone: "+92-21-35120084",
+    email: "happyhands@schoolsinfo.pk",
+    established: "2001",
+    summary: "Happy Hands is a community-focused school offering affordable, values-based education to the families of Korangi. With dedicated staff and a strong pastoral care system, it has become a trusted institution for parents seeking quality yet accessible schooling.",
+    lat: 24.8333, lng: 67.1333
+  },
+  {
+    id: 7, name: "The Educators",
+    area: "Gulshan-e-Hadeed", city: "Karachi",
+    rating: 4.4, intake: 900, emoji: "🖊️",
+    bg: "linear-gradient(135deg,#1d4ed8,#3b82f6)",
+    type: "Matric / O Level",
+    library: true, canteen: true, boarding: false, sports: true, transport: true,
+    sportsList: "Cricket, Badminton, Table Tennis",
+    phone: "+92-21-34100032",
+    email: "educators.gh@schoolsinfo.pk",
+    established: "2000",
+    summary: "The Educators franchise has grown rapidly to become one of Pakistan's largest school networks. The Gulshan-e-Hadeed campus delivers a strong academic programme with attentive faculty and a range of co-curricular activities for well-rounded development.",
+    lat: 24.8760, lng: 67.1900
+  },
+  {
+    id: 8, name: "Froebel's International School",
+    area: "Defence Phase 2", city: "Karachi",
+    rating: 4.6, intake: 750, emoji: "🌟",
+    bg: "linear-gradient(135deg,#be185d,#ec4899)",
+    type: "O/A Level (Cambridge)",
+    library: true, canteen: true, boarding: false, sports: true, transport: true,
+    sportsList: "Swimming, Football, Cricket, Tennis",
+    phone: "+92-21-35890014",
+    email: "info@froebels.edu.pk",
+    established: "1975",
+    summary: "Froebel's is one of Karachi's most prestigious schools, known for its holistic educational philosophy, strong arts and music programme, and consistent performance in Cambridge examinations. The Defence campus enjoys beautiful facilities and a nurturing atmosphere.",
+    lat: 24.8200, lng: 67.0650
+  },
+  {
+    id: 9, name: "Habib Public School",
+    area: "S.I.T.E.", city: "Karachi",
+    rating: 4.5, intake: 1500, emoji: "🎯",
+    bg: "linear-gradient(135deg,#0f766e,#14b8a6)",
+    type: "Matric / Inter",
+    library: true, canteen: true, boarding: true, sports: true, transport: true,
+    sportsList: "Hockey, Cricket, Football, Kabaddi, Athletics",
+    phone: "+92-21-32580521",
+    email: "info@habibpublic.edu.pk",
+    established: "1963",
+    summary: "Habib Public School is one of Karachi's oldest and most respected institutions, with a proud legacy in sports, arts, and academics. Its large SITE campus features extensive grounds, boarding facilities, and a strong alumni network of professionals and leaders.",
+    lat: 24.8980, lng: 66.9890
+  },
+];
+
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let activeFilter = 'all';
+let searchQ = '';
+let visibleCount = 6;
+let currentSchool = null;
+
+/* ═══════════════════════════════════════════
+   RENDER SCHOOLS
+═══════════════════════════════════════════ */
+function getFiltered() {
+  return SCHOOLS.filter(s => {
+    const q = searchQ.toLowerCase();
+    const matchQ = !q || s.name.toLowerCase().includes(q) || s.area.toLowerCase().includes(q) || s.city.toLowerCase().includes(q);
+    const matchF = activeFilter === 'all' || s[activeFilter];
+    return matchQ && matchF;
+  });
+}
+
+function renderSchools() {
+  const grid = document.getElementById('schoolsGrid');
+  grid.innerHTML = '';
+  const filtered = getFiltered();
+  const slice = filtered.slice(0, visibleCount);
+  document.getElementById('resultCount').textContent =
+    filtered.length === SCHOOLS.length ? `Showing all ${SCHOOLS.length} schools` :
+    `Found ${filtered.length} school${filtered.length !== 1 ? 's' : ''} matching your search`;
+  document.getElementById('btnLoadMore').style.display = filtered.length > visibleCount ? '' : 'none';
+
+  if (!slice.length) {
+    grid.innerHTML = `<div class="col-12 no-results"><i class="bi bi-search"></i><h5>No schools found</h5><p>Try adjusting your search or filter criteria.</p></div>`;
+    return;
+  }
+
+  slice.forEach((s, i) => {
+    const tags = [];
+    if (s.library)   tags.push(`<span class="tag"><i class="bi bi-book-fill"></i>Library</span>`);
+    if (s.canteen)   tags.push(`<span class="tag"><i class="bi bi-cup-hot-fill"></i>Canteen</span>`);
+    if (s.boarding)  tags.push(`<span class="tag"><i class="bi bi-house-fill"></i>Boarding</span>`);
+    if (s.sports)    tags.push(`<span class="tag"><i class="bi bi-trophy-fill"></i>Sports</span>`);
+    if (s.transport) tags.push(`<span class="tag"><i class="bi bi-bus-front-fill"></i>Transport</span>`);
+
+    const col = document.createElement('div');
+    col.className = 'col-md-6 col-lg-4 reveal';
+    col.style.transitionDelay = (i * .07) + 's';
+    col.innerHTML = `
+      <div class="school-card">
+        <div class="card-cover">
+          <div class="card-cover-bg" style="background:${s.bg}"></div>
+          <div class="card-cover-emoji">${s.emoji}</div>
+          <div class="card-type-badge">${s.type}</div>
+          <div class="card-rating-badge">⭐ ${s.rating}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">${s.name}</div>
+          <div class="card-loc"><i class="bi bi-geo-alt-fill"></i>${s.area}, ${s.city}</div>
+          <div class="card-tags">${tags.join('')}</div>
+          <p class="card-summary">${s.summary.substring(0, 110)}…</p>
+        </div>
+        <div class="card-footer">
+          <div class="intake-info"><i class="bi bi-people-fill me-1" style="color:var(--gold)"></i>Intake: <strong>${s.intake.toLocaleString()}</strong></div>
+          <button class="btn-detail" onclick="openModal(${s.id})">View Details</button>
+        </div>
+      </div>`;
+    grid.appendChild(col);
+  });
+  observeReveal();
+}
+
+/* ═══════════════════════════════════════════
+   FILTER CHIPS
+═══════════════════════════════════════════ */
+document.getElementById('filterChips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  activeFilter = chip.dataset.filter;
+  visibleCount = 6;
+  renderSchools();
+});
+
+/* ═══════════════════════════════════════════
+   SEARCH
+═══════════════════════════════════════════ */
+function doSearch() {
+  searchQ = (document.getElementById('searchName').value + ' ' + document.getElementById('searchLoc').value).trim();
+  visibleCount = 6;
+  renderSchools();
+  document.getElementById('schools').scrollIntoView({ behavior: 'smooth' });
+  toast('Search complete! Showing matching schools.');
+}
+
+['searchName','searchLoc'].forEach(id => {
+  document.getElementById(id).addEventListener('keyup', e => { if (e.key === 'Enter') doSearch(); });
+});
+
+document.getElementById('btnLoadMore').addEventListener('click', () => {
+  visibleCount += 3; renderSchools();
+  observeReveal();
+});
+
+/* ═══════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════ */
+function openModal(id) {
+  const s = SCHOOLS.find(x => x.id === id);
+  currentSchool = s;
+  document.getElementById('modalTitle').textContent = s.name;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+      <div style="font-size:3.2rem;line-height:1">${s.emoji}</div>
+      <div style="flex:1">
+        <h5 style="color:var(--navy);margin:0;font-family:'Cormorant Garamond',serif;font-size:1.35rem">${s.name}</h5>
+        <p style="color:var(--slate);font-size:.85rem;margin:.2rem 0 0"><i class="bi bi-geo-alt-fill me-1" style="color:var(--gold)"></i>${s.area}, ${s.city}</p>
+      </div>
+      <span style="background:#fef3c7;color:#92400e;border-radius:10px;padding:6px 14px;font-weight:700;font-size:1.05rem;flex-shrink:0">⭐ ${s.rating}</span>
+    </div>
+    <p style="color:var(--slate);line-height:1.8;font-size:.91rem;margin-bottom:1.5rem">${s.summary}</p>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-calendar3"></i></div>
+      <div><div class="dr-label">Established</div><div class="dr-val">${s.established}</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-mortarboard-fill"></i></div>
+      <div><div class="dr-label">Curriculum / Type</div><div class="dr-val">${s.type}</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-people-fill"></i></div>
+      <div><div class="dr-label">Maximum Intake Capacity</div><div class="dr-val">${s.intake.toLocaleString()} Students</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-book-fill"></i></div>
+      <div><div class="dr-label">Library Available</div><div class="dr-val"><span class="${s.library?'pill-yes':'pill-no'}">${s.library?'✓ Yes':'✗ No'}</span></div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-cup-hot-fill"></i></div>
+      <div><div class="dr-label">Canteen Facility</div><div class="dr-val"><span class="${s.canteen?'pill-yes':'pill-no'}">${s.canteen?'✓ Yes':'✗ No'}</span></div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-house-fill"></i></div>
+      <div><div class="dr-label">Boarding Available</div><div class="dr-val"><span class="${s.boarding?'pill-yes':'pill-no'}">${s.boarding?'✓ Yes':'✗ No'}</span></div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-bus-front-fill"></i></div>
+      <div><div class="dr-label">School Transport</div><div class="dr-val"><span class="${s.transport?'pill-yes':'pill-no'}">${s.transport?'✓ Yes':'✗ No'}</span></div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-trophy-fill"></i></div>
+      <div><div class="dr-label">Sports Options Available</div><div class="dr-val">${s.sportsList}</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-telephone-fill"></i></div>
+      <div><div class="dr-label">Phone</div><div class="dr-val">${s.phone}</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-envelope-fill"></i></div>
+      <div><div class="dr-label">Email</div><div class="dr-val">${s.email}</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="dr-icon"><i class="bi bi-geo-alt-fill"></i></div>
+      <div>
+        <div class="dr-label">GeoLocation (Google Maps)</div>
+        <div class="dr-val">
+          <a href="https://www.google.com/maps?q=${s.lat},${s.lng}" target="_blank" rel="noopener" class="maps-link">
+            <i class="bi bi-map-fill" style="color:var(--gold)"></i> Open in Google Maps
+          </a>
+          <span style="color:var(--slate);font-size:.78rem;margin-left:.6rem">${s.lat}, ${s.lng}</span>
+        </div>
+      </div>
+    </div>`;
+  new bootstrap.Modal(document.getElementById('schoolModal')).show();
+}
+
+/* ═══════════════════════════════════════════
+   DOWNLOAD DOC
+═══════════════════════════════════════════ */
+function dlDoc() {
+  if (!currentSchool) return;
+  const s = currentSchool;
+  const content =
+`SCHOOL INFORMATION BROCHURE
+${'═'.repeat(52)}
+
+School Name  : ${s.name}
+Area         : ${s.area}, ${s.city}
+Established  : ${s.established}
+Curriculum   : ${s.type}
+Rating       : ${s.rating} / 5.0
+Phone        : ${s.phone}
+Email        : ${s.email}
+
+FACILITIES
+${'─'.repeat(40)}
+Max Intake   : ${s.intake.toLocaleString()} Students
+Library      : ${s.library ? 'Available ✓' : 'Not Available ✗'}
+Canteen      : ${s.canteen ? 'Available ✓' : 'Not Available ✗'}
+Boarding     : ${s.boarding ? 'Available ✓' : 'Not Available ✗'}
+Transport    : ${s.transport ? 'Available ✓' : 'Not Available ✗'}
+Sports       : ${s.sportsList}
+
+ABOUT THE SCHOOL
+${'─'.repeat(40)}
+${s.summary}
+
+LOCATION (GEOLOCATION)
+${'─'.repeat(40)}
+Latitude     : ${s.lat}
+Longitude    : ${s.lng}
+Google Maps  : https://www.google.com/maps?q=${s.lat},${s.lng}
+
+${'═'.repeat(52)}
+Generated by SchoolsInfo | www.schoolsinfo.pk
+© 2026 SchoolsInfo — All rights reserved
+`;
+  const blob = new Blob([content], { type: 'application/msword' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${s.name.replace(/\s+/g,'-')}-Brochure.doc`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Brochure downloaded successfully!');
+}
+
+/* ═══════════════════════════════════════════
+   MAP LIST
+═══════════════════════════════════════════ */
+function renderMapList() {
+  document.getElementById('mapSchoolList').innerHTML =
+    SCHOOLS.map((s, i) => `
+      <div class="school-list-item">
+        <div class="sli-num">${i + 1}</div>
+        <div style="flex:1;min-width:0">
+          <div class="sli-name">${s.name}</div>
+          <div class="sli-addr">${s.area}, ${s.city}</div>
+        </div>
+        <button class="btn-locate-sm" onclick="locateSchool(${s.id})">
+          <i class="bi bi-geo-alt-fill me-1"></i>Locate
+        </button>
+      </div>`).join('');
+}
+
+function locateSchool(id) {
+  const s = SCHOOLS.find(x => x.id === id);
+  window.open(`https://www.google.com/maps?q=${s.lat},${s.lng}`, '_blank');
+  toast(`Opening ${s.name} in Google Maps…`);
+}
+
+/* ═══════════════════════════════════════════
+   GEOLOCATION
+═══════════════════════════════════════════ */
+function useMyLocation() {
+  const status = document.getElementById('searchStatus');
+  if (!navigator.geolocation) { toast('Geolocation is not supported in your browser.'); return; }
+  status.innerHTML = '<i class="bi bi-arrow-repeat me-1" style="color:var(--sky)"></i>Detecting your location…';
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      status.innerHTML = `<i class="bi bi-check-circle-fill me-1" style="color:#22c55e"></i>Location found: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      document.getElementById('map-frame').innerHTML = `
+        <iframe width="100%" height="100%" style="border:0;display:block" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=${lat},${lng}&z=14&output=embed" title="Your location map">
+        </iframe>`;
+      toast('Your location found and shown on the map!');
+      document.getElementById('sitemap').scrollIntoView({ behavior: 'smooth' });
+    },
+    () => {
+      status.innerHTML = '<i class="bi bi-exclamation-circle me-1" style="color:#ef4444"></i>Location access denied.';
+      toast('Please allow location access in your browser.');
+    }
+  );
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT FORM
+═══════════════════════════════════════════ */
+function sendMsg() {
+  const name = document.getElementById('cName').value.trim();
+  const email = document.getElementById('cEmail').value.trim();
+  const subj = document.getElementById('cSubject').value.trim();
+  const msg = document.getElementById('cMsg').value.trim();
+  if (!name || !email || !msg) { toast('Please fill in all required fields.'); return; }
+  if (!email.includes('@')) { toast('Please enter a valid email address.'); return; }
+  ['cName','cEmail','cPhone','cSubject','cMsg'].forEach(id => document.getElementById(id).value = '');
+  toast('Message sent! We will get back to you soon.');
+}
+
+function subscribe() {
+  const email = document.getElementById('nlEmail').value.trim();
+  if (!email || !email.includes('@')) { toast('Please enter a valid email address.'); return; }
+  document.getElementById('nlEmail').value = '';
+  toast('Subscribed! You\'ll receive school updates soon.');
+}
+
+/* ═══════════════════════════════════════════
+   NAVBAR SCROLL + TOGGLE + ACTIVE LINKS
+═══════════════════════════════════════════ */
+const nav = document.getElementById('mainNav');
+const toggler = document.getElementById('navToggler');
+const collapse = document.getElementById('navCollapse');
+
+toggler.addEventListener('click', () => {
+  const open = collapse.classList.toggle('open');
+  toggler.setAttribute('aria-expanded', open);
+});
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
+
+  // Active nav
+  const sections = ['hero','about','search','schools','features','sitemap','contact'];
+  let current = 'hero';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 90) current = id;
+  });
+  document.querySelectorAll('.nav-link[href^="#"]').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// Close mobile menu on link click
+document.querySelectorAll('#navCollapse .nav-link').forEach(a => {
+  a.addEventListener('click', () => { collapse.classList.remove('open'); toggler.setAttribute('aria-expanded','false'); });
+});
+
+/* ═══════════════════════════════════════════
+   COUNTER ANIMATION
+═══════════════════════════════════════════ */
+function animCounter(el, target, suffix='') {
+  const duration = 1800;
+  const start = performance.now();
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const step = ts => {
+    const p = Math.min((ts - start) / duration, 1);
+    el.textContent = Math.floor(ease(p) * target);
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+// Hero counters
+const heroObs = new IntersectionObserver(entries => {
+  if (!entries[0].isIntersecting) return;
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const v = +el.dataset.count;
+    const d = 1800, s = performance.now();
+    const step = ts => {
+      const p = Math.min((ts-s)/d,1), e = 1-Math.pow(1-p,3);
+      el.textContent = (Math.floor(e*v)).toLocaleString() + '+';
+      if (p<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+  heroObs.disconnect();
+}, { threshold: .4 });
+heroObs.observe(document.getElementById('hero'));
+
+// About counters
+const aboutObs = new IntersectionObserver(entries => {
+  if (!entries[0].isIntersecting) return;
+  animCounter(document.getElementById('cnt1'), 120);
+  animCounter(document.getElementById('cnt2'), 18);
+  animCounter(document.getElementById('cnt3'), 50);
+  animCounter(document.getElementById('cnt4'), 100);
+  aboutObs.disconnect();
+}, { threshold: .3 });
+aboutObs.observe(document.getElementById('about'));
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+function observeReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); } });
+  }, { threshold: .1 });
+  document.querySelectorAll('.reveal:not(.show)').forEach(el => obs.observe(el));
+}
+observeReveal();
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+renderSchools();
+renderMapList();
+</script>
+</body>
+</html>
